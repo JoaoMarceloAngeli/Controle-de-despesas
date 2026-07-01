@@ -40,9 +40,10 @@ export function GastosFixosConfig({
   return (
     <div className="flex flex-col gap-4">
       <p className="text-sm text-slate-500">
-        Gastos fixos são lançados automaticamente no bloco de saída escolhido em todo novo leilão —
-        eles não aparecem como opção para adicionar manualmente lá. Alterar essa lista não afeta
-        leilões já salvos.
+        Gastos fixos são lançados automaticamente no bloco de saída escolhido, no leilão atual e em
+        todo novo leilão — eles não aparecem como opção para adicionar manualmente lá, e permanecem
+        fixos em todos os relatórios até serem excluídos aqui. Leilões já salvos no histórico não são
+        alterados.
       </p>
 
       <div className="grid grid-cols-1 gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 sm:grid-cols-[2fr_1fr_1fr_1fr_auto]">

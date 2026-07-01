@@ -1,0 +1,21 @@
+{
+  "name": "Mara Rosa Leilões — Gestão Financeira",
+  "short_name": "Mara Rosa Leilões",
+  "start_url": "/Controle-de-despesas/",
+  "scope": "/Controle-de-despesas/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#201d1d",
+  "icons": [
+    {
+      "src": "/Controle-de-despesas/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/Controle-de-despesas/logo-mark.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

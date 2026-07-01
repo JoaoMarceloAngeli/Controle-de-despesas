@@ -95,9 +95,18 @@ export function SaidaOperacionalForm({
                   min={0}
                 />
               </div>
-              <Botao variante="perigo" onClick={() => onRemover(item.id)}>
-                Remover
-              </Botao>
+              {item.gastoFixoId ? (
+                <span
+                  className="text-center text-xs text-slate-400 sm:w-32"
+                  title="Para remover, exclua o gasto fixo em Configurações"
+                >
+                  Remova em Configurações
+                </span>
+              ) : (
+                <Botao variante="perigo" onClick={() => onRemover(item.id)}>
+                  Remover
+                </Botao>
+              )}
             </li>
           ))}
         </ul>

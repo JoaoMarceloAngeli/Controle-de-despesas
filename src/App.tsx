@@ -52,9 +52,9 @@ function App() {
   }
 
   const gastosFixos = useGastosFixos()
-  const estadoLeilao = useLeilao(undefined, gastosFixos.gastosFixos)
-  const historico = useHistoricoLeiloes()
   const participantesFixos = useParticipantesFixos()
+  const estadoLeilao = useLeilao(undefined, participantesFixos.participantes, gastosFixos.gastosFixos)
+  const historico = useHistoricoLeiloes()
 
   function salvarLeilao(leilao: Leilao) {
     historico.salvar(leilao)
@@ -70,7 +70,7 @@ function App() {
   function duplicarLeilao(id: string) {
     const copia = historico.duplicar(id)
     if (!copia) return
-    estadoLeilao.carregarLeilao(copia)
+    estadoLeilao.carregarLeilao(copia, { ativarSincronizacaoFixos: true })
     setTela('editar')
   }
 

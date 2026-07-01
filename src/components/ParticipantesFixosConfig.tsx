@@ -26,8 +26,10 @@ export function ParticipantesFixosConfig({
   return (
     <div className="flex flex-col gap-4">
       <p className="text-sm text-slate-500">
-        Esses nomes aparecem pré-cadastrados no bloco "Saídas do leilão" de todo novo leilão. Alterar
-        essa lista não afeta leilões já salvos.
+        Esses participantes entram automaticamente como um item já lançado (valor R$ 0,00, para você
+        preencher) no bloco "Saídas do leilão" do leilão atual e de todo novo leilão — eles permanecem
+        fixos em todos os relatórios até serem excluídos aqui. Leilões já salvos no histórico não são
+        alterados.
       </p>
 
       <div className="flex gap-2">

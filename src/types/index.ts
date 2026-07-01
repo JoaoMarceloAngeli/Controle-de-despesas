@@ -10,6 +10,8 @@ export interface Participante {
 export interface SaidaLeilao {
   id: string
   participanteId?: string
+  /** Presente quando o item foi lançado automaticamente por ser um participante fixo — trava a remoção manual. */
+  participanteFixoId?: string
   gastoFixoId?: string
   nome: string
   valor: number

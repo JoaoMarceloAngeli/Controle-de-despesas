@@ -106,7 +106,7 @@ export function SaidaLeilaoForm({
                 onChange={(e) => onAtualizar(item.id, { nome: e.target.value })}
                 className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
               />
-              {item.gastoFixoId && (
+              {(item.gastoFixoId || item.participanteFixoId) && (
                 <span className="w-fit rounded-full bg-brand-100 px-2 py-0.5 text-xs font-medium text-brand-700">
                   Fixo
                 </span>
@@ -118,9 +118,18 @@ export function SaidaLeilaoForm({
                   min={0}
                 />
               </div>
-              <Botao variante="perigo" onClick={() => onRemover(item.id)}>
-                Remover
-              </Botao>
+              {item.gastoFixoId || item.participanteFixoId ? (
+                <span
+                  className="text-center text-xs text-slate-400 sm:w-32"
+                  title="Para remover, exclua o participante fixo em Configurações"
+                >
+                  Remova em Configurações
+                </span>
+              ) : (
+                <Botao variante="perigo" onClick={() => onRemover(item.id)}>
+                  Remover
+                </Botao>
+              )}
             </li>
           ))}
         </ul>
