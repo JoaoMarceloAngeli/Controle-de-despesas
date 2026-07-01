@@ -106,6 +106,11 @@ export function SaidaLeilaoForm({
                 onChange={(e) => onAtualizar(item.id, { nome: e.target.value })}
                 className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
               />
+              {item.gastoFixoId && (
+                <span className="w-fit rounded-full bg-brand-100 px-2 py-0.5 text-xs font-medium text-brand-700">
+                  Fixo
+                </span>
+              )}
               <div className="sm:w-48">
                 <CampoMoeda
                   valor={item.valor}

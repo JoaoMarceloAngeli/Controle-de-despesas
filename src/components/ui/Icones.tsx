@@ -44,6 +44,17 @@ export function IconeParticipantes(props: SVGProps<SVGSVGElement>) {
   )
 }
 
+export function IconeGastosFixos(props: SVGProps<SVGSVGElement>) {
+  return (
+    <Svg {...props}>
+      <rect x="3" y="6" width="18" height="13" rx="2" />
+      <path d="M3 10h18" />
+      <path d="M7 14h4" />
+      <circle cx="16" cy="14.5" r="1.5" />
+    </Svg>
+  )
+}
+
 export function IconeMenu(props: SVGProps<SVGSVGElement>) {
   return (
     <Svg {...props}>

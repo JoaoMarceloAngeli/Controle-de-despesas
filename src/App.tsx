@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { GastosFixosConfig } from './components/GastosFixosConfig'
 import { HistoricoLeiloes } from './components/HistoricoLeiloes'
 import { LeilaoForm } from './components/LeilaoForm'
 import { ParticipantesFixosConfig } from './components/ParticipantesFixosConfig'
@@ -7,23 +8,26 @@ import {
   IconeColapsar,
   IconeExpandir,
   IconeFechar,
+  IconeGastosFixos,
   IconeHistorico,
   IconeLeilao,
   IconeMenu,
   IconeParticipantes,
 } from './components/ui/Icones'
+import { useGastosFixos } from './hooks/useGastosFixos'
 import { useHistoricoLeiloes } from './hooks/useHistoricoLeiloes'
 import { useLeilao } from './hooks/useLeilao'
 import { useParticipantesFixos } from './hooks/useParticipantesFixos'
 import type { Leilao } from './types'
 import { gravarNoStorage, lerDoStorage } from './utils/storage'
 
-type Tela = 'editar' | 'historico' | 'configuracoes'
+type Tela = 'editar' | 'historico' | 'participantesFixos' | 'gastosFixos'
 
 const ABAS_PRINCIPAIS: { id: Tela; label: string; Icone: typeof IconeLeilao }[] = [
   { id: 'editar', label: 'Leilão atual', Icone: IconeLeilao },
   { id: 'historico', label: 'Histórico', Icone: IconeHistorico },
-  { id: 'configuracoes', label: 'Participantes fixos', Icone: IconeParticipantes },
+  { id: 'participantesFixos', label: 'Participantes fixos', Icone: IconeParticipantes },
+  { id: 'gastosFixos', label: 'Gastos fixos', Icone: IconeGastosFixos },
 ]
 
 const CHAVE_SIDEBAR_COLAPSADA = 'leiloes:sidebarColapsada'
@@ -47,7 +51,8 @@ function App() {
     setMenuMobileAberto(false)
   }
 
-  const estadoLeilao = useLeilao()
+  const gastosFixos = useGastosFixos()
+  const estadoLeilao = useLeilao(undefined, gastosFixos.gastosFixos)
   const historico = useHistoricoLeiloes()
   const participantesFixos = useParticipantesFixos()
 
@@ -185,12 +190,21 @@ function App() {
             />
           )}
 
-          {tela === 'configuracoes' && (
+          {tela === 'participantesFixos' && (
             <ParticipantesFixosConfig
               participantes={participantesFixos.participantes}
               onAdicionar={participantesFixos.adicionar}
               onRenomear={participantesFixos.renomear}
               onRemover={participantesFixos.remover}
+            />
+          )}
+
+          {tela === 'gastosFixos' && (
+            <GastosFixosConfig
+              gastosFixos={gastosFixos.gastosFixos}
+              onAdicionar={gastosFixos.adicionar}
+              onAtualizar={gastosFixos.atualizar}
+              onRemover={gastosFixos.remover}
             />
           )}
         </main>

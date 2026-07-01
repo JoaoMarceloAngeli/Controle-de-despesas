@@ -10,6 +10,7 @@ export interface Participante {
 export interface SaidaLeilao {
   id: string
   participanteId?: string
+  gastoFixoId?: string
   nome: string
   valor: number
 }
@@ -17,9 +18,26 @@ export interface SaidaLeilao {
 /** Despesa avulsa do bloco "Saídas operacionais" (reparos, boletos, fornecedores). */
 export interface SaidaOperacional {
   id: string
+  gastoFixoId?: string
   descricao: string
   valor: number
   data: string
+}
+
+/** Bloco de saída em que um gasto fixo deve ser lançado automaticamente. */
+export type DestinoGastoFixo = 'saidasLeilao' | 'saidasOperacionais'
+
+/**
+ * Despesa recorrente (aluguel, folha, assinatura...) que entra sozinha em todo
+ * novo leilão, no bloco escolhido em `destino` — não é uma opção manual dentro
+ * das saídas, ela já nasce lançada.
+ */
+export interface GastoFixo {
+  id: string
+  nome: string
+  valor: number
+  dataPagamento?: string
+  destino: DestinoGastoFixo
 }
 
 /** Valor a receber de terceiros, listado no bloco "A receber". */

@@ -1,18 +1,38 @@
 import { useMemo, useState } from 'react'
-import type { Leilao, SaidaLeilao, SaidaOperacional, ValorAReceber } from '../types'
+import type { GastoFixo, Leilao, SaidaLeilao, SaidaOperacional, ValorAReceber } from '../types'
 import { calcularResumoFinanceiro } from '../utils/calculos'
 import { hojeISO } from '../utils/formatters'
 import { gerarId } from '../utils/id'
 
-export function criarLeilaoVazio(): Leilao {
+/** Gera os itens de saída correspondentes aos gastos fixos, já lançados — nunca uma opção manual. */
+function lancarGastosFixos(gastosFixos: GastoFixo[]) {
+  const saidasLeilao: SaidaLeilao[] = gastosFixos
+    .filter((gasto) => gasto.destino === 'saidasLeilao')
+    .map((gasto) => ({ id: gerarId(), nome: gasto.nome, valor: gasto.valor, gastoFixoId: gasto.id }))
+
+  const saidasOperacionais: SaidaOperacional[] = gastosFixos
+    .filter((gasto) => gasto.destino === 'saidasOperacionais')
+    .map((gasto) => ({
+      id: gerarId(),
+      descricao: gasto.nome,
+      valor: gasto.valor,
+      data: gasto.dataPagamento ?? hojeISO(),
+      gastoFixoId: gasto.id,
+    }))
+
+  return { saidasLeilao, saidasOperacionais }
+}
+
+export function criarLeilaoVazio(gastosFixos: GastoFixo[] = []): Leilao {
   const agora = new Date().toISOString()
+  const { saidasLeilao, saidasOperacionais } = lancarGastosFixos(gastosFixos)
   return {
     id: gerarId(),
     data: hojeISO(),
     criadoEm: agora,
     atualizadoEm: agora,
-    saidasLeilao: [],
-    saidasOperacionais: [],
+    saidasLeilao,
+    saidasOperacionais,
     valoresAReceber: [],
     totalVendas: 0,
     percentualComissao: 0,
@@ -24,8 +44,8 @@ export function criarLeilaoVazio(): Leilao {
 }
 
 /** Estado de um leilão em edição, com CRUD dos 3 blocos de itens e cálculo do resumo. */
-export function useLeilao(leilaoInicial?: Leilao) {
-  const [leilao, setLeilao] = useState<Leilao>(() => leilaoInicial ?? criarLeilaoVazio())
+export function useLeilao(leilaoInicial?: Leilao, gastosFixos: GastoFixo[] = []) {
+  const [leilao, setLeilao] = useState<Leilao>(() => leilaoInicial ?? criarLeilaoVazio(gastosFixos))
 
   function atualizarCampo<K extends keyof Leilao>(campo: K, valor: Leilao[K]) {
     setLeilao((prev) => ({ ...prev, [campo]: valor, atualizadoEm: new Date().toISOString() }))
@@ -36,7 +56,7 @@ export function useLeilao(leilaoInicial?: Leilao) {
   }
 
   function novoLeilao() {
-    setLeilao(criarLeilaoVazio())
+    setLeilao(criarLeilaoVazio(gastosFixos))
   }
 
   // Saídas do leilão
