@@ -37,7 +37,7 @@ export function ParticipantesFixosConfig({
           onChange={(e) => setNomeNovo(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && adicionar()}
           placeholder="Nome do participante fixo"
-          className="flex-1 rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+          className="flex-1 rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
         />
         <Botao onClick={adicionar}>Adicionar</Botao>
       </div>
@@ -55,7 +55,7 @@ export function ParticipantesFixosConfig({
                 type="text"
                 value={p.nome}
                 onChange={(e) => onRenomear(p.id, e.target.value)}
-                className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
               />
               <Botao variante="perigo" onClick={() => onRemover(p.id)}>
                 Remover

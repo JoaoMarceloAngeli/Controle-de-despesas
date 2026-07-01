@@ -33,7 +33,7 @@ export function ResumoFinanceiro({ leilao, resumo, onAtualizarCampo }: ResumoFin
               const valor = e.target.valueAsNumber
               onAtualizarCampo('percentualComissao', Number.isFinite(valor) ? valor : 0)
             }}
-            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
           />
         </label>
         <CampoMoeda
@@ -83,7 +83,7 @@ export function ResumoFinanceiro({ leilao, resumo, onAtualizarCampo }: ResumoFin
           value={leilao.observacoes ?? ''}
           onChange={(e) => onAtualizarCampo('observacoes', e.target.value)}
           rows={3}
-          className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+          className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
         />
       </label>
     </div>

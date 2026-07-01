@@ -13,7 +13,7 @@ export function CampoMoeda({ id, label, valor, onChange, min, step = 0.01, place
   return (
     <label htmlFor={id} className="flex flex-col gap-1 text-sm text-slate-700">
       {label && <span className="font-medium">{label}</span>}
-      <span className="flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500">
+      <span className="flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 focus-within:border-brand-600 focus-within:ring-1 focus-within:ring-brand-600">
         <span className="text-slate-400">R$</span>
         <input
           id={id}

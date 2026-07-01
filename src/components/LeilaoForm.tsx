@@ -37,7 +37,7 @@ export function LeilaoForm({ estado, participantesFixos, onSalvar }: LeilaoFormP
             type="date"
             value={leilao.data}
             onChange={(e) => estado.atualizarCampo('data', e.target.value)}
-            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
           />
         </label>
         <Botao onClick={() => onSalvar(leilao)}>Salvar leilão</Botao>
@@ -51,7 +51,7 @@ export function LeilaoForm({ estado, participantesFixos, onSalvar }: LeilaoFormP
             onClick={() => setAbaAtiva(aba.id)}
             className={`rounded-t-md px-4 py-2 text-sm font-medium transition-colors ${
               abaAtiva === aba.id
-                ? 'border-b-2 border-emerald-600 text-emerald-700'
+                ? 'border-b-2 border-brand-500 text-ink-800'
                 : 'text-slate-500 hover:text-slate-700'
             }`}
           >

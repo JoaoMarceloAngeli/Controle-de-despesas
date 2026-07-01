@@ -35,7 +35,7 @@ export function AReceberForm({ itens, onAdicionar, onAtualizar, onRemover }: ARe
             value={descricaoNova}
             onChange={(e) => setDescricaoNova(e.target.value)}
             placeholder="De quem / referente a quê"
-            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
           />
         </label>
 
@@ -59,7 +59,7 @@ export function AReceberForm({ itens, onAdicionar, onAtualizar, onRemover }: ARe
                 type="text"
                 value={item.descricao}
                 onChange={(e) => onAtualizar(item.id, { descricao: e.target.value })}
-                className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
               />
               <div className="sm:w-48">
                 <CampoMoeda

@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+/* Identidade visual Mara Rosa Leilões: dourado + preto, extraídos da logo oficial. */
+@theme {
+  --color-brand-50: #fff8e0;
+  --color-brand-100: #ffedb3;
+  --color-brand-300: #ffdb5c;
+  --color-brand-400: #ffd029;
+  --color-brand-500: #ffc200;
+  --color-brand-600: #e0a900;
+  --color-brand-700: #b88900;
+
+  --color-ink-500: #4a4544;
+  --color-ink-700: #2d2929;
+  --color-ink-800: #201d1d;
+  --color-ink-900: #151212;
+}
+
 body {
   margin: 0;
 }

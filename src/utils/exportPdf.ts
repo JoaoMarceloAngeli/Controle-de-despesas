@@ -11,7 +11,10 @@ interface DocComTabela extends jsPDF {
 /** Exporta o leilão para PDF com um bloco de tabela por seção, pronto para impressão/arquivo. */
 export function exportarLeilaoPdf(leilao: Leilao, resumo: ResumoFinanceiro) {
   const doc = new jsPDF() as DocComTabela
-  const estiloCabecalho = { fillColor: [16, 122, 87] as [number, number, number] }
+  const estiloCabecalho = {
+    fillColor: [32, 29, 29] as [number, number, number],
+    textColor: [255, 194, 0] as [number, number, number],
+  }
 
   doc.setFontSize(16)
   doc.text(`Leilão de ${formatarDataBR(leilao.data)}`, 14, 16)

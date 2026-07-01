@@ -3,22 +3,49 @@ import { HistoricoLeiloes } from './components/HistoricoLeiloes'
 import { LeilaoForm } from './components/LeilaoForm'
 import { ParticipantesFixosConfig } from './components/ParticipantesFixosConfig'
 import { Botao } from './components/ui/Botao'
+import {
+  IconeColapsar,
+  IconeExpandir,
+  IconeFechar,
+  IconeHistorico,
+  IconeLeilao,
+  IconeMenu,
+  IconeParticipantes,
+} from './components/ui/Icones'
 import { useHistoricoLeiloes } from './hooks/useHistoricoLeiloes'
 import { useLeilao } from './hooks/useLeilao'
 import { useParticipantesFixos } from './hooks/useParticipantesFixos'
 import type { Leilao } from './types'
+import { gravarNoStorage, lerDoStorage } from './utils/storage'
 
 type Tela = 'editar' | 'historico' | 'configuracoes'
 
-const ABAS_PRINCIPAIS: { id: Tela; label: string }[] = [
-  { id: 'editar', label: 'Leilão atual' },
-  { id: 'historico', label: 'Histórico' },
-  { id: 'configuracoes', label: 'Participantes fixos' },
+const ABAS_PRINCIPAIS: { id: Tela; label: string; Icone: typeof IconeLeilao }[] = [
+  { id: 'editar', label: 'Leilão atual', Icone: IconeLeilao },
+  { id: 'historico', label: 'Histórico', Icone: IconeHistorico },
+  { id: 'configuracoes', label: 'Participantes fixos', Icone: IconeParticipantes },
 ]
+
+const CHAVE_SIDEBAR_COLAPSADA = 'leiloes:sidebarColapsada'
 
 function App() {
   const [tela, setTela] = useState<Tela>('editar')
   const [mensagem, setMensagem] = useState('')
+  const [colapsada, setColapsada] = useState(() => lerDoStorage<boolean>(CHAVE_SIDEBAR_COLAPSADA) ?? false)
+  const [menuMobileAberto, setMenuMobileAberto] = useState(false)
+
+  function alternarColapso() {
+    setColapsada((prev) => {
+      const novo = !prev
+      gravarNoStorage(CHAVE_SIDEBAR_COLAPSADA, novo)
+      return novo
+    })
+  }
+
+  function selecionarTela(novaTela: Tela) {
+    setTela(novaTela)
+    setMenuMobileAberto(false)
+  }
 
   const estadoLeilao = useLeilao()
   const historico = useHistoricoLeiloes()
@@ -48,67 +75,126 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="border-b border-slate-200 bg-white px-4 py-4 sm:px-6">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
-          <h1 className="text-xl font-semibold text-slate-900 sm:text-2xl">
-            Gestão Financeira de Leilão
-          </h1>
-          <Botao variante="secundario" onClick={novoLeilao}>
-            Novo leilão
-          </Botao>
+    <div className="flex min-h-screen bg-slate-50">
+      {menuMobileAberto && (
+        <div
+          className="fixed inset-0 z-30 bg-slate-900/40 md:hidden"
+          onClick={() => setMenuMobileAberto(false)}
+        />
+      )}
+
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 flex w-60 flex-col bg-ink-800 transition-transform duration-200 md:static md:translate-x-0 md:transition-[width] ${
+          menuMobileAberto ? 'translate-x-0' : '-translate-x-full'
+        } ${colapsada ? 'md:w-16' : 'md:w-60'}`}
+      >
+        <div className="flex items-center justify-between gap-2 border-b border-white/10 px-3 py-4">
+          <div className="flex min-w-0 items-center gap-2">
+            <img
+              src={`${import.meta.env.BASE_URL}logo-mark.png`}
+              alt="Mara Rosa Leilões"
+              className="size-8 shrink-0 rounded-md"
+            />
+            <h1
+              className={`truncate text-sm font-semibold text-brand-500 ${colapsada ? 'md:hidden' : ''}`}
+            >
+              Mara Rosa Leilões
+            </h1>
+          </div>
+          <button
+            type="button"
+            onClick={alternarColapso}
+            className="hidden shrink-0 rounded-md p-1.5 text-slate-400 hover:bg-white/10 hover:text-brand-500 md:inline-flex"
+            title={colapsada ? 'Expandir menu' : 'Colapsar menu'}
+          >
+            {colapsada ? <IconeExpandir className="size-5" /> : <IconeColapsar className="size-5" />}
+          </button>
+          <button
+            type="button"
+            onClick={() => setMenuMobileAberto(false)}
+            className="shrink-0 rounded-md p-1.5 text-slate-400 hover:bg-white/10 hover:text-brand-500 md:hidden"
+            title="Fechar menu"
+          >
+            <IconeFechar className="size-5" />
+          </button>
         </div>
-        <nav className="mx-auto mt-4 flex max-w-6xl flex-wrap gap-1">
+
+        <nav className="flex flex-1 flex-col gap-1 p-2">
           {ABAS_PRINCIPAIS.map((aba) => (
             <button
               key={aba.id}
               type="button"
-              onClick={() => setTela(aba.id)}
-              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+              onClick={() => selecionarTela(aba.id)}
+              title={aba.label}
+              className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                 tela === aba.id
-                  ? 'bg-emerald-600 text-white'
-                  : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'
+                  ? 'bg-brand-500 text-ink-900'
+                  : 'text-slate-300 hover:bg-white/10 hover:text-brand-400'
               }`}
             >
-              {aba.label}
+              <aba.Icone className="size-5 shrink-0" />
+              <span className={colapsada ? 'md:hidden' : ''}>{aba.label}</span>
             </button>
           ))}
         </nav>
-      </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
-        {mensagem && (
-          <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-700">
-            {mensagem}
-          </div>
-        )}
+        <div className="border-t border-white/10 p-2">
+          <Botao variante="secundario" onClick={novoLeilao} className="w-full justify-center">
+            <span className={colapsada ? 'md:hidden' : ''}>Novo leilão</span>
+            <span className={`hidden ${colapsada ? 'md:inline' : ''}`}>+</span>
+          </Botao>
+        </div>
+      </aside>
 
-        {tela === 'editar' && (
-          <LeilaoForm
-            estado={estadoLeilao}
-            participantesFixos={participantesFixos.participantes}
-            onSalvar={salvarLeilao}
-          />
-        )}
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="flex items-center gap-3 border-b border-slate-200 bg-white px-4 py-4 sm:px-6">
+          <button
+            type="button"
+            onClick={() => setMenuMobileAberto(true)}
+            className="rounded-md p-1.5 text-slate-500 hover:bg-slate-100 md:hidden"
+            title="Abrir menu"
+          >
+            <IconeMenu className="size-5" />
+          </button>
+          <h1 className="text-xl font-semibold text-slate-900 sm:text-2xl">
+            {ABAS_PRINCIPAIS.find((aba) => aba.id === tela)?.label ?? 'Gestão Financeira de Leilão'}
+          </h1>
+        </header>
 
-        {tela === 'historico' && (
-          <HistoricoLeiloes
-            leiloes={historico.leiloes}
-            onAbrir={abrirLeilao}
-            onDuplicar={duplicarLeilao}
-            onRemover={historico.remover}
-          />
-        )}
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6">
+          {mensagem && (
+            <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-700">
+              {mensagem}
+            </div>
+          )}
 
-        {tela === 'configuracoes' && (
-          <ParticipantesFixosConfig
-            participantes={participantesFixos.participantes}
-            onAdicionar={participantesFixos.adicionar}
-            onRenomear={participantesFixos.renomear}
-            onRemover={participantesFixos.remover}
-          />
-        )}
-      </main>
+          {tela === 'editar' && (
+            <LeilaoForm
+              estado={estadoLeilao}
+              participantesFixos={participantesFixos.participantes}
+              onSalvar={salvarLeilao}
+            />
+          )}
+
+          {tela === 'historico' && (
+            <HistoricoLeiloes
+              leiloes={historico.leiloes}
+              onAbrir={abrirLeilao}
+              onDuplicar={duplicarLeilao}
+              onRemover={historico.remover}
+            />
+          )}
+
+          {tela === 'configuracoes' && (
+            <ParticipantesFixosConfig
+              participantes={participantesFixos.participantes}
+              onAdicionar={participantesFixos.adicionar}
+              onRenomear={participantesFixos.renomear}
+              onRemover={participantesFixos.remover}
+            />
+          )}
+        </main>
+      </div>
     </div>
   )
 }

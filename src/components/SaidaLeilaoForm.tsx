@@ -53,7 +53,7 @@ export function SaidaLeilaoForm({
           <select
             value={participanteSelecionado}
             onChange={(e) => setParticipanteSelecionado(e.target.value)}
-            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
           >
             <option value="">Selecione...</option>
             {participantesFixos.map((p) => (
@@ -73,7 +73,7 @@ export function SaidaLeilaoForm({
               value={nomeLivre}
               onChange={(e) => setNomeLivre(e.target.value)}
               placeholder="Nome do participante"
-              className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+              className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
             />
           </label>
         ) : (
@@ -104,7 +104,7 @@ export function SaidaLeilaoForm({
                 type="text"
                 value={item.nome}
                 onChange={(e) => onAtualizar(item.id, { nome: e.target.value })}
-                className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
               />
               <div className="sm:w-48">
                 <CampoMoeda

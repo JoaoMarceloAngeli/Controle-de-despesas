@@ -5,7 +5,7 @@ interface BotaoProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const VARIANTES: Record<NonNullable<BotaoProps['variante']>, string> = {
-  primario: 'bg-emerald-600 text-white hover:bg-emerald-700',
+  primario: 'bg-brand-500 text-ink-900 hover:bg-brand-600',
   secundario: 'bg-slate-100 text-slate-700 hover:bg-slate-200',
   perigo: 'bg-red-50 text-red-600 hover:bg-red-100',
 }
