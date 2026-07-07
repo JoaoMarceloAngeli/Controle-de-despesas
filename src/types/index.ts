@@ -1,4 +1,4 @@
-import { SOCIOS_FIXOS } from '../data/socios'
+import { SOCIOS_FIXOS } from '../shared/data/socios'
 
 /** Pessoa cadastrada para receber pagamentos nas saídas do leilão (fixa ou variável). */
 export interface Participante {

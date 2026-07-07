@@ -1,11 +1,17 @@
 import { useState } from 'react'
-import { GastosFixosConfig } from './components/GastosFixosConfig'
-import { HistoricoLeiloes } from './components/HistoricoLeiloes'
-import { LeilaoForm } from './components/LeilaoForm'
-import { ParticipantesFixosConfig } from './components/ParticipantesFixosConfig'
-import { Botao } from './components/ui/Botao'
+import { Dashboard } from './features/dashboard/components/Dashboard'
+import { GastosFixosConfig } from './features/gastosFixos/components/GastosFixosConfig'
+import { useGastosFixos } from './features/gastosFixos/hooks/useGastosFixos'
+import { HistoricoLeiloes } from './features/historico/components/HistoricoLeiloes'
+import { useHistoricoLeiloes } from './features/historico/hooks/useHistoricoLeiloes'
+import { LeilaoForm } from './features/leilao/components/LeilaoForm'
+import { useLeilao } from './features/leilao/hooks/useLeilao'
+import { ParticipantesFixosConfig } from './features/participantes/components/ParticipantesFixosConfig'
+import { useParticipantesFixos } from './features/participantes/hooks/useParticipantesFixos'
+import { Botao } from './shared/ui/Botao'
 import {
   IconeColapsar,
+  IconeDashboard,
   IconeExpandir,
   IconeFechar,
   IconeGastosFixos,
@@ -13,18 +19,15 @@ import {
   IconeLeilao,
   IconeMenu,
   IconeParticipantes,
-} from './components/ui/Icones'
-import { useGastosFixos } from './hooks/useGastosFixos'
-import { useHistoricoLeiloes } from './hooks/useHistoricoLeiloes'
-import { useLeilao } from './hooks/useLeilao'
-import { useParticipantesFixos } from './hooks/useParticipantesFixos'
+} from './shared/ui/Icones'
+import { gravarNoStorage, lerDoStorage } from './shared/utils/storage'
 import type { Leilao } from './types'
-import { gravarNoStorage, lerDoStorage } from './utils/storage'
 
-type Tela = 'editar' | 'historico' | 'participantesFixos' | 'gastosFixos'
+type Tela = 'editar' | 'dashboard' | 'historico' | 'participantesFixos' | 'gastosFixos'
 
 const ABAS_PRINCIPAIS: { id: Tela; label: string; Icone: typeof IconeLeilao }[] = [
   { id: 'editar', label: 'Leilão atual', Icone: IconeLeilao },
+  { id: 'dashboard', label: 'Dashboard', Icone: IconeDashboard },
   { id: 'historico', label: 'Histórico', Icone: IconeHistorico },
   { id: 'participantesFixos', label: 'Participantes fixos', Icone: IconeParticipantes },
   { id: 'gastosFixos', label: 'Gastos fixos', Icone: IconeGastosFixos },
@@ -180,6 +183,8 @@ function App() {
               onSalvar={salvarLeilao}
             />
           )}
+
+          {tela === 'dashboard' && <Dashboard leiloes={historico.leiloes} />}
 
           {tela === 'historico' && (
             <HistoricoLeiloes
