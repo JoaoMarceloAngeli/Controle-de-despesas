@@ -66,6 +66,14 @@ export function IconeDashboard(props: SVGProps<SVGSVGElement>) {
   )
 }
 
+export function IconeFiltro(props: SVGProps<SVGSVGElement>) {
+  return (
+    <Svg {...props}>
+      <path d="M4 5h16l-6 7v6l-4 2v-8z" />
+    </Svg>
+  )
+}
+
 export function IconeMenu(props: SVGProps<SVGSVGElement>) {
   return (
     <Svg {...props}>
