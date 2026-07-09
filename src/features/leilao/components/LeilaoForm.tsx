@@ -30,9 +30,9 @@ export function LeilaoForm({ estado, participantesFixos, onSalvar }: LeilaoFormP
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <label className="flex flex-col gap-1 text-sm text-slate-700">
-          <span className="font-medium">Data do leilão</span>
+      <div className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
+        <label className="flex flex-col gap-1 text-sm text-slate-700 sm:flex-row sm:items-center sm:gap-3">
+          <span className="font-medium text-slate-600">Data do leilão</span>
           <input
             type="date"
             value={leilao.data}
@@ -40,7 +40,9 @@ export function LeilaoForm({ estado, participantesFixos, onSalvar }: LeilaoFormP
             className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
           />
         </label>
-        <Botao onClick={() => onSalvar(leilao)}>Salvar leilão</Botao>
+        <Botao onClick={() => onSalvar(leilao)} className="w-full sm:w-auto">
+          Salvar leilão
+        </Botao>
       </div>
 
       <nav className="flex flex-wrap gap-1 border-b border-slate-200">
